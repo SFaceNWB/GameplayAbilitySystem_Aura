@@ -28,9 +28,9 @@ OwnerActor: 在敌人为本身，在玩家为本身，用于表示游戏中具�
 
 Health and Mana
 -
-		GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, Health, OldHealth)
+GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, Health, OldHealth)
 宏，这个函数会在属性值通过网络从服务器复制到客户端时被调用。使用这个宏可以确保属性值的旧值被保存，以便在需要时可以进行回滚操作。
 
-		virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-		DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Health, COND_None, REPNOTIFY_Always); //宏
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+    DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Health, COND_None, REPNOTIFY_Always); //宏
 注册需要复制的属性，让UE知道哪些属性需要同步。宏用来添加属性到列表中`REPNOTIFY_Always`表示一直复制，`COND_None`表示无条件复制。
