@@ -7,6 +7,25 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "OverlayWidgetController.generated.h"
 
+
+USTRUCT(BlueprintType)
+struct FUIWidgetRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag MessageTag = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText Message = FText();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<class UAuraUserWidget> MessageWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* Image = nullptr;
+};
+
 class UAuraUserWidget;
 struct FOnAttributeChangeData;
 
@@ -16,23 +35,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, NewM
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, NewMaxMana);
 
 
-USTRUCT(BlueprintType)
-struct FUIWidgetRow : public FTableRowBase
-{
-	GENERATED_BODY()
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FGameplayTag MessageTag = FGameplayTag();
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FText Message = FText();
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<UAuraUserWidget> MessageWidget;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UTexture2D* Image = nullptr;
-};
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 
 /**
  * 
@@ -56,6 +59,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnMaxManaChangedSignature OnMaxManaChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
+	FMessageWidgetRowSignature MessageWidgetRowDelegate;
 protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
