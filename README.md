@@ -37,15 +37,18 @@ GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, Health, OldHealth)
 
 Mapping Tags to Attributes
 -
-委托与指针的关系
+委托与指针的关系如下
+
     TMap<FGameplayTag,FAttributeSignature> TagsToAttributes;
     const FAuraGameplayTag& GameplayTags = FAuraGameplayTags::Get();
 委托的方式：
+
     DECLARE_DELEGATE_RetVal(FGameplayAttribute, FAttributeSignature);
     FAttributeSignature StrengthDelegate;
     StrengthDelegate.BindStatic(UAuraAttributeSet::GetStrengthAttribute);
     TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, StrengthDelegate)
 指针的方式：
+
     TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr == FAttributeSignature；//委托的含义替代
     TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr == FGameplayAttribute(*)();//本质为函数指针
     TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
