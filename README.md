@@ -34,3 +34,22 @@ GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, Health, OldHealth)
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Health, COND_None, REPNOTIFY_Always); //宏
 注册需要复制的属性，让UE知道哪些属性需要同步。宏用来添加属性到列表中`REPNOTIFY_Always`表示一直复制，`COND_None`表示无条件复制。
+
+Mapping Tags to Attributes
+-
+委托与指针的关系
+TMap<FGameplayTag,FAttributeSignature> TagsToAttributes;
+const FAuraGameplayTag& GameplayTags = FAuraGameplayTags::Get();
+委托的方式：
+DECLARE_DELEGATE_RetVal(FGameplayAttribute, FAttributeSignature)
+FAttributeSignature StrengthDelegate;
+StrengthDelegate.BindStatic(UAuraAttributeSet::GetStrengthAttribute);
+TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, StrengthDelegate)
+指针的方式：
+TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr == FAttributeSignature；//委托的含义替代
+TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr == FGameplayAttribute(*)();//本质为函数指针
+TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
+// typedef是特殊对于FGameplayAttribute()的signature， TStaticFunPtr是对任何选择的signature通用的。
+//typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr FAttributeFuncPtr;
+template<class T>
+using TStaticFuncPtr = typename TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr;//模块化为通用模板
