@@ -70,7 +70,7 @@ Source Required Tags: 只有当源Actor或组件具有这些标签才能被激�
 Source Blocked Tags:如果源Actor或组件具有这些标签中的任何一个，该技能会被阻止。  
 Target Required Tags: 只有当目标Actor或组件具有这些标签才能被激活。  
 Target Blocked Tags:如果目标Actor或组件具有这些标签中的任何一个，该技能会被阻止。  
-_Instancing Policy_ 
+_Instancing Policy_  
 Instance Per Actor:为该技能创建一个实例，每次激活都会被重复使用。可以存储持久数据，但是变量每次必须手动重置。  
 Instanced Per Execution: 每次激活都会创建一个实例。不会在激活的时候存储持久数据，性能不如Instance Per Actor。  
 Non-Instanced: 只使用类默认对象，不创建实例。不能存储状态，不能在Ability Tasks上绑定委托，三项中性能最好的。  
