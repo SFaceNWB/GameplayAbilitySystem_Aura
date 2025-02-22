@@ -59,7 +59,7 @@ Mapping Tags to Attributes
 
 Settings on Gameplay Abilities
 -
-_Tags_  
+__Tags__  
 Ability Tags: 技能有这些标签  
 Cancel Abilities with Tag: 有这些标签的技能在执行时会被取消。  
 Block Abilities with Tag: 有这些标签的技能在激活时会被阻止。  
@@ -70,11 +70,11 @@ Source Required Tags: 只有当源Actor或组件具有这些标签才能被激�
 Source Blocked Tags:如果源Actor或组件具有这些标签中的任何一个，该技能会被阻止。  
 Target Required Tags: 只有当目标Actor或组件具有这些标签才能被激活。  
 Target Blocked Tags:如果目标Actor或组件具有这些标签中的任何一个，该技能会被阻止。  
-_Instancing Policy_  
+__Instancing Policy__  
 Instance Per Actor:为该技能创建一个实例，每次激活都会被重复使用。可以存储持久数据，但是变量每次必须手动重置。  
 Instanced Per Execution: 每次激活都会创建一个实例。不会在激活的时候存储持久数据，性能不如Instance Per Actor。  
 Non-Instanced: 只使用类默认对象，不创建实例。不能存储状态，不能在Ability Tasks上绑定委托，三项中性能最好的。  
-_Net Execution Policy_  
+__Net Execution Policy__  
 Local Only:只能在本地客户端运行，服务器不允许技能。  
 Local Predicted: 在本地客户端激活，然后在服务器上激活。利用预测，服务器可以回滚无效的更改。  
 Server Only: 只能在服务器上运行。  
