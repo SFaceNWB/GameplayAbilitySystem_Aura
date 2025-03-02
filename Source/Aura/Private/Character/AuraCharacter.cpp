@@ -8,6 +8,7 @@
 #include "AbilitySystemComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "UI/HUD/AuraHUD.h"
+#include "Aura/Aura.h"
 
 AAuraCharacter::AAuraCharacter()
 {
