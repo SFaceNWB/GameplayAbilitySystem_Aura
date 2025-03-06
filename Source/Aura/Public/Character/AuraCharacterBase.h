@@ -61,6 +61,25 @@ protected:
 	virtual void InitializeDefaultAttributes() const;
 
 	void AddCharacterAbilities();
+
+	/* Dissolve Effects */
+	/* ÈÜ½âÐ§¹û */
+
+	void Dissolve();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartWeaponDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> DissolveMaterialInstance;
+	
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
+
+
 private:
 	
 	UPROPERTY(EditAnywhere, Category = "Abilities")
