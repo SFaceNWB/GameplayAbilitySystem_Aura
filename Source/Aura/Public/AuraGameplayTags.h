@@ -54,6 +54,10 @@ public:
 
 	FGameplayTag Abilities_Attack;
 
+	FGameplayTag Motage_Attack_Weapon;
+	FGameplayTag Motage_Attack_RightHand;
+	FGameplayTag Motage_Attack_LeftHand;
+
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
 	FGameplayTag Effects_HitReact;
