@@ -30,10 +30,15 @@ public:
 	virtual FVector GetCombatSocketLocation_Implementation() override;
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor* GetAvatar_Implementation() override;
+	virtual TArray<FTaggedMontage> GetAttackMontage_Implementation() override;
 	/** End Combat Interface */
 
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath();
+
+	UPROPERTY(EditAnyWhere, Category = "Combat")
+	TArray<FTaggedMontage> AttackMontages;
+
 protected:
 	virtual void BeginPlay() override;
 
