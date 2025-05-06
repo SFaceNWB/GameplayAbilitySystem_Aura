@@ -98,8 +98,11 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
 	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = "Combat")
 	UNiagaraSystem* BloodEffect;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = "Combat")
+	USoundBase* DeathSound;
 
 private:
 	
