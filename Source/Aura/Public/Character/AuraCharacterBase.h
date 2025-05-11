@@ -102,7 +102,7 @@ protected:
 	
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
 	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
-	
+
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = "Combat")
 	UNiagaraSystem* BloodEffect;
 
