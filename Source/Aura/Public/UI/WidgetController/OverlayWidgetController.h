@@ -10,6 +10,7 @@
 
 struct FAuraAbilityInfo;
 class UAbilityInfo;
+class UAuraAbilitySystemComponent;
 
 USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
