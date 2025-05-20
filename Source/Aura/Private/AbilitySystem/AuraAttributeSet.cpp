@@ -102,7 +102,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		Props.SourceController = Props.SourceASC->AbilityActorInfo->PlayerController.Get();
 		if (Props.SourceController == nullptr && Props.SourceAvaterActor != nullptr)
 		{
-			if (APawn* Pawn = Cast<APawn>(Props.SourceAvaterActor))
+			if (const APawn* Pawn = Cast<APawn>(Props.SourceAvaterActor))
 			{
 				Props.SourceController = Pawn->GetController();
 			}
@@ -197,14 +197,30 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 				IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
 				IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
 
-				SetHealth(GetMaxHealth());
-				SetMana(GetMaxMana());
+				bTopOffHealth = true;
+				bTopOffMana = true;
 
 				IPlayerInterface::Execute_LevelUp(Props.SourceCharacter);
 			}
 
 			IPlayerInterface::Execute_AddToXp(Props.SourceCharacter, LocalIncomingXP);
 		}
+	}
+}
+
+void UAuraAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
+{
+	Super::PostAttributeChange(Attribute, OldValue, NewValue);
+
+	if (Attribute == GetMaxHealthAttribute() && bTopOffHealth)
+	{
+		bTopOffHealth = false;
+		SetHealth(GetMaxHealth());
+	}
+	if (Attribute == GetMaxManaAttribute() && bTopOffMana)
+	{
+		bTopOffMana = false;
+		SetMana(GetMaxMana());
 	}
 }
 
