@@ -18,6 +18,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void CauseDamage(AActor* TargetActor);
+	
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
