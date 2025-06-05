@@ -232,7 +232,7 @@ void UAuraAbilitySystemLibrary::SetIsSuccessfulDebuff(FGameplayEffectContextHand
 }
 
 void UAuraAbilitySystemLibrary::SetDebuffDamage(FGameplayEffectContextHandle& EffectContextHandle,
-	bool InDamage)
+	float InDamage)
 {
 	if (FAuraGameplayEffectContext* AuraEffectContext = static_cast<FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
 	{
@@ -241,7 +241,7 @@ void UAuraAbilitySystemLibrary::SetDebuffDamage(FGameplayEffectContextHandle& Ef
 }
 
 void UAuraAbilitySystemLibrary::SetDebuffDuration(FGameplayEffectContextHandle& EffectContextHandle,
-	bool InDuration)
+	float InDuration)
 {
 	if (FAuraGameplayEffectContext* AuraEffectContext = static_cast<FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
 	{
@@ -250,7 +250,7 @@ void UAuraAbilitySystemLibrary::SetDebuffDuration(FGameplayEffectContextHandle& 
 }
 
 void UAuraAbilitySystemLibrary::SetDebuffFrequency(FGameplayEffectContextHandle& EffectContextHandle,
-	bool InFrequency)
+	float InFrequency)
 {
 	if (FAuraGameplayEffectContext* AuraEffectContext = static_cast<FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
 	{
