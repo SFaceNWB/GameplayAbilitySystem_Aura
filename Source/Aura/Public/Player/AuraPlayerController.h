@@ -67,7 +67,7 @@ private:
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
 
 	UAuraAbilitySystemComponent* GetASC();
-
+	
 	FVector CachedDestination = FVector::ZeroVector;
 	float FollowTime = 0.0f;
 	float ShortPressThreshold = 0.5f;
