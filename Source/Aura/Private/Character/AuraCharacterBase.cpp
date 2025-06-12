@@ -64,7 +64,9 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& Deat
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Dissolve();
 	bDead = true;
+	BurnDebuffComponent->Deactivate();
 	OnDeath.Broadcast(this);
+	
 }
 
 void AAuraCharacterBase::BeginPlay()
