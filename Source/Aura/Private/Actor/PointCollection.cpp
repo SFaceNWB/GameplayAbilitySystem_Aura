@@ -69,7 +69,7 @@ TArray<USceneComponent*> APointCollection::GetGroundPoints(const FVector& Ground
 		{
 			return ArrayCopy;
 		}
-
+		
 		if (Pt != Pt_0)
 		{
 			FVector ToPoint = Pt->GetComponentLocation() - Pt_0->GetComponentLocation();
