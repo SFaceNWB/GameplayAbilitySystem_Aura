@@ -12,6 +12,7 @@
 #include "AuraAbilityTypes.h"
 #include "NativeGameplayTags.h"
 #include "Engine/SpecularProfile.h"
+#include "Kismet/GameplayStatics.h"
 
 struct AuraDamageStatics
 {
@@ -137,6 +138,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	}
 
 	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
@@ -162,7 +164,39 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDef, EvaluationParameters, Resistance);
 		Resistance = FMath::Clamp(Resistance, 0.0f, 100.0f);
 
+
 		DamageTypeValue *= (100.0f - Resistance) / 100.0f;
+
+		if (UAuraAbilitySystemLibrary::IsRadialDamage(EffectContextHandle))
+		{
+			// 1. 覆盖基础角色的伤害
+			// 2. 创建委托OnDamageDelegate, 广播伤害给接收的角色。
+			// 3. 绑定lambda给 OnDamageDelegate, 处理伤害逻辑。
+			// 4, 回拨UGameplayStatics::ApplyRadialDamageWithFalloff, 处理伤害的衰减逻辑。
+			//  对于受伤害者，广播OnDamageDelegate
+			// 5. 在lambda中，处理伤害逻辑，计算伤害值。
+			if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(TargetAvatar))
+			{
+				CombatInterface->GetOnDamageSignature().AddLambda(
+					[&](float DamageAmout)
+					{
+						DamageTypeValue = DamageAmout;
+					});
+			}
+			UGameplayStatics::ApplyRadialDamageWithFalloff(
+				TargetAvatar,
+				DamageTypeValue,
+				0.0f, 
+				UAuraAbilitySystemLibrary::GetRadialDamageOrigin(EffectContextHandle),
+				UAuraAbilitySystemLibrary::GetRadialDamageInnerRadius(EffectContextHandle),
+				UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(EffectContextHandle),
+				1.0f,
+				UDamageType::StaticClass(), 
+				TArray<AActor*>(),
+				SourceAvatar,
+				nullptr);
+		}
+
 
 		Damage += DamageTypeValue;
 	}
@@ -175,7 +209,6 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
 
-	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 
 	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
 
