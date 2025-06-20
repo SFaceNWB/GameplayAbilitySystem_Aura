@@ -6,7 +6,7 @@
 void AAuraFireBall::BeginPlay()
 {
 	Super::BeginPlay();
-
+	StartOutgoingTimeline();
 }
 
 void AAuraFireBall::OnSphereIverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
