@@ -6,7 +6,7 @@
 void UMVVM_LoadSlot::InitializeSlot()
 {
 	// TODO: 根据加载的数据检查插槽状态
-	SetWidgetSwitcherIndex.Broadcast(1);
+	SetWidgetSwitcherIndex.Broadcast(2);
 }
 
 void UMVVM_LoadSlot::SetLoadSlotName(FString InLoadSlotName)
