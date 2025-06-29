@@ -10,6 +10,7 @@
 #include "AbilitySystem/Data/LevelUpInfo.h"
 #include "Player/AuraPlayerController.h"
 #include "NiagaraComponent.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "Actor/MagicCircle.h"
@@ -56,9 +57,11 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	InitAbilityActorInfo();
 	LoadProgress();
 
-
-	//TODO: 从磁盘加载能力
-	AddCharacterAbilities();
+	//AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	//if (AuraGameMode)
+	//{
+	//	AuraGameMode->LoadWorldState();
+	//}
 }
 
 
@@ -73,14 +76,6 @@ void AAuraCharacter::LoadProgress()
 			return;
 		}
 
-		if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
-		{
-			AuraPlayerState->SetLevel(SaveData->PlayerLevel);
-			AuraPlayerState->SetXP(SaveData->XP);
-			AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
-			AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
-		}
-
 		if (SaveData->bFirstTimeLoadIn)
 		{
 			InitializeDefaultAttributes();
@@ -88,7 +83,17 @@ void AAuraCharacter::LoadProgress()
 		}
 		else
 		{
-			
+			//TODO: 从磁盘加载能力
+			if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
+			{
+				AuraPlayerState->SetLevel(SaveData->PlayerLevel);
+				AuraPlayerState->SetXP(SaveData->XP);
+				AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
+				AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
+			}
+
+
+			UAuraAbilitySystemLibrary::InitializeDefaultAttributesFromSaveData(this, AbilitySystemComponent, SaveData);
 		}
 	}
 }
