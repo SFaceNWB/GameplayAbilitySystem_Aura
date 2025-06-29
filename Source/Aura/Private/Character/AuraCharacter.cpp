@@ -81,7 +81,12 @@ void AAuraCharacter::LoadProgress()
 		}
 		else
 		{
-			//TODO: 从磁盘加载能力
+			if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+			{
+				AuraASC->AddCharacterAbilitiesFromSaveData(SaveData);
+			}
+			
+
 			if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
 			{
 				AuraPlayerState->SetLevel(SaveData->PlayerLevel);
@@ -251,6 +256,7 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 		UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent);
 
 		FForEachAbility SaveAbilityDelegate;
+		SaveData->SaveAbilities.Empty();
 		SaveAbilityDelegate.BindLambda(
 			[this, AuraASC, & SaveData](const FGameplayAbilitySpec& AbilitySpec)
 			{
@@ -266,7 +272,7 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 				SavedAbility.AbilityType = Info.AbilityType;
 				SavedAbility.AbilityTag = AbilityTag;
 
-				SaveData->SaveAbilities.Add(SavedAbility);
+				SaveData->SaveAbilities.AddUnique(SavedAbility);
 			});
 
 		AuraASC->ForEachAbility(SaveAbilityDelegate);

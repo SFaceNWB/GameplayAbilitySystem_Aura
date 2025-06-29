@@ -43,6 +43,11 @@ struct FSaveAbility
 	int32 AbilityLevel;
 };
 
+inline  bool operator==(const FSaveAbility& Left, const FSaveAbility& Right)
+{
+	return Left.AbilityTag.MatchesTagExact(Right.AbilityTag);
+}
+
 /**
  * 
  */
