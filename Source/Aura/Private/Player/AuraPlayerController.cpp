@@ -5,7 +5,6 @@
 
 #include "EnhancedInputSubsystems.h"
 #include "Input/AuraInputComponent.h"
-#include "Interaction/EnemyInterface.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Components/SplineComponent.h"
@@ -17,6 +16,7 @@
 #include "Aura/Aura.h"
 #include "Components/DecalComponent.h"
 #include "GameFramework/Character.h"
+#include "Interaction/HighlightInterface.h"
 #include "UI/Widget/DamageTextComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
@@ -157,7 +157,7 @@ void AAuraPlayerController::CursorTrace()
 	if (!CursorHit.bBlockingHit) return;
 
 	LastActor = ThisActor;
-	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
+	ThisActor = Cast<IHighlightInterface>(CursorHit.GetActor());
 
 	if (LastActor != ThisActor)
 	{
